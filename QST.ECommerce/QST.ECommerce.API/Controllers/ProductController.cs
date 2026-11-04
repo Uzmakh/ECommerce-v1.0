@@ -27,7 +27,11 @@ namespace QST.ECommerce.API.Controllers
         [HttpPost]
         public ActionResult AddProduct(Product request)
         {
-            _prodSvc.SaveProduct(request);
+            int result = _prodSvc.SaveProduct(request);
+            if (result == -1)
+            {
+                return BadRequest("Invalid product data. Product name is required and price must be greater than zero.");
+            }
             return Ok("Product is successfully added!");
         }
        

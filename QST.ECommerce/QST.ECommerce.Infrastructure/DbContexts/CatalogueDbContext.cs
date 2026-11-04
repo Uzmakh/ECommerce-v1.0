@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using QST.ECommerce.Domain.Catalogue;
 
 namespace QST.ECommerce.Infrastructure.DbContexts;
@@ -23,10 +23,9 @@ public class CatalogDbContext : DbContext
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Department> Departments => Set<Department>();
 
-
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    //base.OnModelCreating(modelBuilder);
-    //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogueDbContext).Assembly);
-    //}
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
+    }
 }

@@ -9,7 +9,7 @@ namespace QST.ECommerce.Infrastructure.Repositories
     public class BrandRepository : IBrandRepository
     {
         private readonly CatalogDbContext _dbContext;
-
+ 
         public BrandRepository(CatalogDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -24,7 +24,8 @@ namespace QST.ECommerce.Infrastructure.Repositories
 
         public List<Brand> GetAllBrands()
         {
-            return _dbContext.Brands.ToList();
+            var list = _dbContext.Brands.ToList();
+            return list;
         }
     }
 }

@@ -1,16 +1,12 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
 /.vs
 /QST.ECommerce/.vs
-/QST.ECommerce/QST.ECommerce.API/bin/Debug/net9.0
-/QST.ECommerce/QST.ECommerce.API/obj
-/QST.ECommerce/QST.ECommerce.Application/bin/Debug/net9.0
-/QST.ECommerce/QST.ECommerce.Application/obj
-/QST.ECommerce/QST.ECommerce.Domain/bin/Debug/net9.0
-/QST.ECommerce/QST.ECommerce.Domain/obj
-/QST.ECommerce/QST.ECommerce.Infrastructure/bin/Debug/net9.0
-/QST.ECommerce/QST.ECommerce.Infrastructure/obj
-/QST.ECommerce/QST.ECommerce.Tests/bin
-/QST.ECommerce/QST.ECommerce.Tests/obj
+**/bin/
+**/obj/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo

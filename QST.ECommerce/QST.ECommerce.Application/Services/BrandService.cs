@@ -7,7 +7,9 @@ namespace QST.ECommerce.Application.Services
     public class BrandService : IBrandService
     {
         private readonly IBrandRepository _brandRepository;
-
+        //This construction injection initializes the BrandService class
+        //with an instance of IBrandRepository,
+        //allowing it to access brand-related data operations.
         public BrandService(IBrandRepository brandRepository)
         {
             _brandRepository = brandRepository;
@@ -22,7 +24,8 @@ namespace QST.ECommerce.Application.Services
 
         public List<Brand> GetAllBrands()
         {
-            return _brandRepository.GetAllBrands();
+            var list = _brandRepository.GetAllBrands();
+            return list;
         }
     }
 }
