@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Cart\" />
+    <Folder Include="Inventory\" />
+    <Folder Include="Customer\" />
+    <Folder Include="Shipment\" />
+    <Folder Include="Ordering\" />
+    <Folder Include="Payment\" />
+  </ItemGroup>
+
+</Project>

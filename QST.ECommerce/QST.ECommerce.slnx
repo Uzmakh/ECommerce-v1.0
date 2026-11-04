@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="QST.ECommerce.API/QST.ECommerce.API.csproj" Id="407716f4-df8a-4388-8529-b8c8d706488a" />
+  <Project Path="QST.ECommerce.Application/QST.ECommerce.Application.csproj" />
+  <Project Path="QST.ECommerce.Domain/QST.ECommerce.Domain.csproj" />
+  <Project Path="QST.ECommerce.Infrastructure/QST.ECommerce.Infrastructure.csproj" />
+  <Project Path="QST.ECommerce.Tests/QST.ECommerce.Tests.csproj" Id="201231ec-b739-4831-9cdd-2d67a513b561" />
+</Solution>

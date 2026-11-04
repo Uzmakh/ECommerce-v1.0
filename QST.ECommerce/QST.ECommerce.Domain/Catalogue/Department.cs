@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace QST.ECommerce.Domain.Catalogue
+{
+    public class Department
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+}
