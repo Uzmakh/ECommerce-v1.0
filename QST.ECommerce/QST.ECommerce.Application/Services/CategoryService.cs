@@ -15,8 +15,37 @@ namespace QST.ECommerce.Application.Services
 
         public int SaveCategory(Category category)
         {
-            int result = _categoryRepository.AddCategory(category);
-            return result;
+            return ManageCategory(category, DbCommands.Add);
+        }
+
+        public int ManageCategory(Category category, DbCommands dbCommands)
+        {
+            if (category == null)
+            {
+                return 0;
+            }
+
+            if (dbCommands == DbCommands.Add)
+            {
+                return _categoryRepository.AddCategory(category);
+            }
+            else if (dbCommands == DbCommands.Update)
+            {
+                return _categoryRepository.UpdateCategory(category);
+            }
+            else if (dbCommands == DbCommands.Delete)
+            {
+                return _categoryRepository.DeleteCategory(category.Id);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public Category? GetCategoryById(int categoryId)
+        {
+            return _categoryRepository.GetCategoryById(categoryId);
         }
 
         public List<Category> GetAllCategories()

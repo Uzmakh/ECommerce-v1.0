@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using QST.ECommerce.Application.Interfaces;
 using QST.ECommerce.Application.Services;
 using QST.ECommerce.Domain.Catalogue;
@@ -17,9 +18,75 @@ namespace QST.ECommerce.Tests
             return 1;
         }
 
+        public int UpdateProduct(Product product)
+        {
+            var existing = _products.FirstOrDefault(p => p.Id == product.Id);
+            if (existing != null)
+            {
+                existing.Name = product.Name;
+                existing.Price = product.Price;
+                existing.StockQuantity = product.StockQuantity;
+                return 1;
+            }
+            return 0;
+        }
+
         public List<Product> GetAllProducts()
         {
             return _products;
+        }
+
+        public Product? GetProductById(int productId)
+        {
+            return _products.FirstOrDefault(p => p.Id == productId);
+        }
+    }
+
+    public class FakeCategoryRepository : ICategoryRepository
+    {
+        private readonly List<Category> _categories = new();
+        private int _nextId = 1;
+
+        public int AddCategory(Category category)
+        {
+            category.Id = _nextId++;
+            _categories.Add(category);
+            return 1;
+        }
+
+        public int UpdateCategory(Category category)
+        {
+            var existing = _categories.FirstOrDefault(c => c.Id == category.Id);
+            if (existing != null)
+            {
+                existing.Name = category.Name;
+                existing.Description = category.Description;
+                existing.DepartmentId = category.DepartmentId;
+                existing.IsActive = category.IsActive;
+                return 1;
+            }
+            return 0;
+        }
+
+        public int DeleteCategory(int categoryId)
+        {
+            var existing = _categories.FirstOrDefault(c => c.Id == categoryId);
+            if (existing != null)
+            {
+                _categories.Remove(existing);
+                return 1;
+            }
+            return 0;
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            return _categories;
+        }
+
+        public Category? GetCategoryById(int categoryId)
+        {
+            return _categories.FirstOrDefault(c => c.Id == categoryId);
         }
     }
 
@@ -128,6 +195,35 @@ namespace QST.ECommerce.Tests
 
             Assert.Equal(-1, result);
             Assert.Empty(service.GetAllProducts());
+        }
+
+        [Fact]
+        public void Test_ManageCategory_Add_Update_Delete()
+        {
+            var repo = new FakeCategoryRepository();
+            var service = new CategoryService(repo);
+
+            // Add
+            var category = new Category { Name = "Gaming", Description = "Consoles and games", DepartmentId = 1 };
+            int addResult = service.ManageCategory(category, DbCommands.Add);
+            Assert.Equal(1, addResult);
+            Assert.Equal(1, category.Id);
+
+            // GetById
+            var fetched = service.GetCategoryById(1);
+            Assert.NotNull(fetched);
+            Assert.Equal("Gaming", fetched.Name);
+
+            // Update
+            fetched.Description = "Updated gaming description";
+            int updateResult = service.ManageCategory(fetched, DbCommands.Update);
+            Assert.Equal(1, updateResult);
+            Assert.Equal("Updated gaming description", service.GetCategoryById(1)?.Description);
+
+            // Delete
+            int deleteResult = service.ManageCategory(fetched, DbCommands.Delete);
+            Assert.Equal(1, deleteResult);
+            Assert.Null(service.GetCategoryById(1));
         }
     }
 }

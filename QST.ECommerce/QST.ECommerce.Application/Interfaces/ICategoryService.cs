@@ -1,13 +1,18 @@
 using QST.ECommerce.Domain.Catalogue;
-
+using System.Collections.Generic;
 
 namespace QST.ECommerce.Application.Interfaces
 {
     public interface ICategoryService
     {
-        //Rules of Contract
-        //Save means 1-Add, 2-Update, 3-Delete
-        int SaveCategory(Category category);
+        // Rules of Contract
+        // Manage Category handles CRUD operations based on DbCommands (Add, Update, Delete)
+        int ManageCategory(Category category, DbCommands dbCommands);
+
+        Category? GetCategoryById(int categoryId);
+
         List<Category> GetAllCategories();
+
+        int SaveCategory(Category category);
     }
 }

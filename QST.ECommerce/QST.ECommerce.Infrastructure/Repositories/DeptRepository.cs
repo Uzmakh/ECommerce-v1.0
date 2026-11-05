@@ -5,11 +5,10 @@ using QST.ECommerce.Application.Interfaces;
 using System.Security.Cryptography.X509Certificates;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
+using System.Collections.Generic;
 
 namespace QST.ECommerce.Infrastructure.Repositories
 {
-
     public class DeptRepository : IDeptRepository
     {
         //Making Variable of the Class CatalogueDbContext to access the database
@@ -30,11 +29,22 @@ namespace QST.ECommerce.Infrastructure.Repositories
             return result;
         }
 
+        public int UpdateDepartment(Department dept)
+        {
+            _dbContext.Departments.Update(dept);  //to update department into Context Class
+            int result = _dbContext.SaveChanges();  //to save department into database
+            return result;
+        }
+
         public List<Department> GetAllDepartments()
         {
             return _dbContext.Departments.ToList();  //to get all departments from database
         }
-    }
 
-    
+        public Department? GetDepartmentById(int deptId)
+        {
+            var dept = _dbContext.Departments.FirstOrDefault(d => d.Id == deptId);
+            return dept;
+        }
+    }
 }

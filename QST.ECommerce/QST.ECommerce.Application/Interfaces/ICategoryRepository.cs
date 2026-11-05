@@ -1,16 +1,18 @@
-﻿using QST.ECommerce.Domain.Catalogue;
-
+using QST.ECommerce.Domain.Catalogue;
+using System.Collections.Generic;
 
 namespace QST.ECommerce.Application.Interfaces
 {
-    public interface ICategoryRepository   //contract to implement
+    public interface ICategoryRepository
     {
-        //contract rules
         int AddCategory(Category category);
 
-        //int UpdateCategory(Category category);
-        //int DeleteCategory(int categoryId);
-        //Category GetCategoryById(int categoryId);
+        int UpdateCategory(Category category);
+
+        int DeleteCategory(int categoryId);
+
         List<Category> GetAllCategories();
+
+        Category? GetCategoryById(int categoryId);
     }
 }

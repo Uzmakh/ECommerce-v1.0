@@ -22,10 +22,23 @@ namespace QST.ECommerce.Infrastructure.Repositories
             return result;
         }
 
+        public int UpdateBrand(Brand brand)
+        {
+            _dbContext.Brands.Update(brand);
+            int result = _dbContext.SaveChanges();
+            return result;
+        }
+
         public List<Brand> GetAllBrands()
         {
             var list = _dbContext.Brands.ToList();
             return list;
+        }
+
+        public Brand? GetBrandById(int brandId)
+        {
+            var brand = _dbContext.Brands.FirstOrDefault(b => b.Id == brandId);
+            return brand;
         }
     }
 }

@@ -19,8 +19,9 @@ namespace QST.ECommerce.Infrastructure.Configurations
             builder.ToTable("Categories");
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasColumnName("Name").IsRequired().HasMaxLength(100);
-            builder.Property(c => c.Description).HasMaxLength(500);
-            builder.Property(c => c.DepartmentId).IsRequired();
+            builder.Property(c => c.Description).HasColumnName("Description").HasMaxLength(500);
+            builder.Property(c => c.DepartmentId).HasColumnName("DepartmentId").IsRequired();
+            builder.Property(c=> c.IsActive).HasColumnName("IsActive").IsRequired().HasDefaultValue(true);
             // Add any additional configurations as needed
         }
 

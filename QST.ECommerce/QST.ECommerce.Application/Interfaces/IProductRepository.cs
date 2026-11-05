@@ -1,16 +1,16 @@
-﻿using QST.ECommerce.Domain.Catalogue;
-
+using QST.ECommerce.Domain.Catalogue;
+using System.Collections.Generic;
 
 namespace QST.ECommerce.Application.Interfaces
 {
-    public interface IProductRepository //Contract
+    public interface IProductRepository
     {
-        // Contract Rules
         int AddProduct(Product product);
-        //int UpdateProduct(Product product);
-        //int DeleteProduct(int id);
-        //Product GetProductById(int productId); 
+
+        int UpdateProduct(Product product);
+
         List<Product> GetAllProducts();
 
+        Product? GetProductById(int productId);
     }
 }
