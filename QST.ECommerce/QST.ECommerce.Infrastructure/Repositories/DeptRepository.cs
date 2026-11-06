@@ -1,44 +1,64 @@
 using System;
-using QST.ECommerce.Domain.Catalogue;
-using QST.ECommerce.Infrastructure.DbContexts;
-using QST.ECommerce.Application.Interfaces;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using QST.ECommerce.Application.Interfaces;
+using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Infrastructure.DbContexts;
 
 namespace QST.ECommerce.Infrastructure.Repositories
 {
     public class DeptRepository : IDeptRepository
     {
-        //Making Variable of the Class CatalogueDbContext to access the database
         private readonly CatalogDbContext _dbContext;
 
-       //Constructor Injection of the Class CatalogueDbContext to access the database
-       public DeptRepository(CatalogDbContext dbContext)
+        public DeptRepository(CatalogDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        //5 operations-DML Operations of CRUD (Create, Read, Update, Delete) for Product Repository
-        //Add first method of AddProduct
         public int AddDepartment(Department dept)
         {
-            _dbContext.Departments.Add(dept);  //to add department into Context Class
-            int result = _dbContext.SaveChanges();  //to save department into database
+            if (dept.CreatedAt == default)
+            {
+                dept.CreatedAt = DateTime.UtcNow;
+            }
+            if (dept.UpdatedAt == default)
+            {
+                dept.UpdatedAt = DateTime.UtcNow;
+            }
+
+            _dbContext.Departments.Add(dept);
+            int result = _dbContext.SaveChanges();
             return result;
         }
 
         public int UpdateDepartment(Department dept)
         {
-            _dbContext.Departments.Update(dept);  //to update department into Context Class
-            int result = _dbContext.SaveChanges();  //to save department into database
+            if (dept == null)
+            {
+                return 0;
+            }
+
+            var deptFromDb = GetDepartmentById(dept.Id);
+            if (deptFromDb == null)
+            {
+                return 0;
+            }
+
+            deptFromDb.Name = dept.Name;
+            deptFromDb.Description = dept.Description;
+            deptFromDb.UpdatedAt = dept.UpdatedAt == default ? DateTime.UtcNow : dept.UpdatedAt;
+            deptFromDb.UpdatedBy = dept.UpdatedBy;
+            deptFromDb.IsActive = dept.IsActive;
+
+            int result = _dbContext.SaveChanges();
             return result;
         }
 
         public List<Department> GetAllDepartments()
         {
-            return _dbContext.Departments.ToList();  //to get all departments from database
+            return _dbContext.Departments.ToList();
         }
 
         public Department? GetDepartmentById(int deptId)

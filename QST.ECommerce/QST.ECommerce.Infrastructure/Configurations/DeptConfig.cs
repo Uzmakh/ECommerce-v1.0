@@ -1,11 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QST.ECommerce.Domain.Catalogue;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QST.ECommerce.Infrastructure.Configurations
 {
@@ -14,14 +9,15 @@ namespace QST.ECommerce.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.ToTable("Departments");
-            builder.HasKey(x=>x.Id);
+            builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).IsRequired();
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Description).HasMaxLength(500);
-
-
-
-            //throw new NotImplementedException();
+            builder.Property(x => x.Name).HasColumnName("Name").IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Description).HasColumnName("Description").HasMaxLength(500);
+            builder.Property(x => x.CreatedAt).HasColumnName("CreatedAt").IsRequired();
+            builder.Property(x => x.CreatedBy).HasColumnName("CreatedBy").HasMaxLength(100);
+            builder.Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").IsRequired();
+            builder.Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").HasMaxLength(100);
+            builder.Property(x => x.IsActive).HasColumnName("IsActive").IsRequired().HasDefaultValue(true);
         }
     }
 }

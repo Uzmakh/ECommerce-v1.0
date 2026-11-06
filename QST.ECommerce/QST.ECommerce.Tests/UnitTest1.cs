@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using QST.ECommerce.Application.Interfaces;
@@ -90,6 +91,44 @@ namespace QST.ECommerce.Tests
         }
     }
 
+    public class FakeDeptRepository : IDeptRepository
+    {
+        private readonly List<Department> _departments = new();
+        private int _nextId = 1;
+
+        public int AddDepartment(Department dept)
+        {
+            dept.Id = _nextId++;
+            _departments.Add(dept);
+            return 1;
+        }
+
+        public int UpdateDepartment(Department dept)
+        {
+            var existing = _departments.FirstOrDefault(d => d.Id == dept.Id);
+            if (existing != null)
+            {
+                existing.Name = dept.Name;
+                existing.Description = dept.Description;
+                existing.UpdatedAt = dept.UpdatedAt;
+                existing.UpdatedBy = dept.UpdatedBy;
+                existing.IsActive = dept.IsActive;
+                return 1;
+            }
+            return 0;
+        }
+
+        public List<Department> GetAllDepartments()
+        {
+            return _departments;
+        }
+
+        public Department? GetDepartmentById(int deptId)
+        {
+            return _departments.FirstOrDefault(d => d.Id == deptId);
+        }
+    }
+
     public class UnitTest1
     {
         [Fact]
@@ -104,6 +143,69 @@ namespace QST.ECommerce.Tests
             };
 
             Assert.Equal(4, departments.Count);
+        }
+
+        [Fact]
+        public void Test_Department_NewFields_Defaults()
+        {
+            var dept = new Department
+            {
+                Name = "Sports",
+                Description = "Sports equipment"
+            };
+
+            Assert.True(dept.IsActive);
+            Assert.Equal(string.Empty, dept.CreatedBy);
+            Assert.Equal(string.Empty, dept.UpdatedBy);
+            Assert.Equal(default(DateTime), dept.CreatedAt);
+            Assert.Equal(default(DateTime), dept.UpdatedAt);
+        }
+
+        [Fact]
+        public void Test_DeptService_SaveDepartment_SetsTimestamps()
+        {
+            var repo = new FakeDeptRepository();
+            var service = new DeptService(repo);
+
+            var dept = new Department
+            {
+                Name = "Footwear",
+                Description = "Shoes and socks",
+                CreatedBy = "Admin"
+            };
+
+            int result = service.SaveDepartment(dept);
+
+            Assert.Equal(1, result);
+            Assert.NotEqual(default(DateTime), dept.CreatedAt);
+            Assert.NotEqual(default(DateTime), dept.UpdatedAt);
+            Assert.Equal("Admin", dept.CreatedBy);
+            Assert.True(dept.IsActive);
+        }
+
+        [Fact]
+        public void Test_DeptService_UpdateDepartment_UpdatesTimestamp()
+        {
+            var repo = new FakeDeptRepository();
+            var service = new DeptService(repo);
+
+            var dept = new Department
+            {
+                Name = "Footwear",
+                Description = "Shoes and socks",
+                CreatedBy = "Admin"
+            };
+            service.SaveDepartment(dept);
+
+            dept.Name = "Luxury Footwear";
+            dept.UpdatedBy = "Editor";
+            int updateResult = service.UpdateDepartment(dept);
+
+            Assert.Equal(1, updateResult);
+            var updated = service.GetDepartmentById(dept.Id);
+            Assert.NotNull(updated);
+            Assert.Equal("Luxury Footwear", updated.Name);
+            Assert.Equal("Editor", updated.UpdatedBy);
         }
 
         [Fact]

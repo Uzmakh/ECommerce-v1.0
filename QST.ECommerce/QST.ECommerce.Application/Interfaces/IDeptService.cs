@@ -1,14 +1,17 @@
-﻿using QST.ECommerce.Domain.Catalogue;
-using System.Reflection.Metadata.Ecma335;
+using System.Collections.Generic;
+using QST.ECommerce.Domain.Catalogue;
 
 namespace QST.ECommerce.Application.Interfaces
 {
-    public interface IDeptService  //contract class for Department Service
+    public interface IDeptService
     {
-        //Rules of Contract
-        //Save means 1-Add, 2-Update, 3-Delete
+        // Rules of Contract
         int SaveDepartment(Department dept);
 
+        int UpdateDepartment(Department dept);
+
         List<Department> GetAllDepartments();
+
+        Department? GetDepartmentById(int deptId);
     }
 }
