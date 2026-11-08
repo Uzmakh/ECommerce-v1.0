@@ -19,13 +19,9 @@ namespace QST.ECommerce.Infrastructure.Repositories
 
         public int AddDepartment(Department dept)
         {
-            if (dept.CreatedAt == default)
+            if (dept.CreatedAt == null || dept.CreatedAt == default)
             {
                 dept.CreatedAt = DateTime.UtcNow;
-            }
-            if (dept.UpdatedAt == default)
-            {
-                dept.UpdatedAt = DateTime.UtcNow;
             }
 
             _dbContext.Departments.Add(dept);
@@ -48,7 +44,7 @@ namespace QST.ECommerce.Infrastructure.Repositories
 
             deptFromDb.Name = dept.Name;
             deptFromDb.Description = dept.Description;
-            deptFromDb.UpdatedAt = dept.UpdatedAt == default ? DateTime.UtcNow : dept.UpdatedAt;
+            deptFromDb.UpdatedAt = dept.UpdatedAt ?? DateTime.UtcNow;
             deptFromDb.UpdatedBy = dept.UpdatedBy;
             deptFromDb.IsActive = dept.IsActive;
 

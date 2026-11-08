@@ -21,13 +21,9 @@ namespace QST.ECommerce.Application.Services
                 return -1;
             }
 
-            if (dept.CreatedAt == default)
+            if (dept.CreatedAt == null || dept.CreatedAt == default)
             {
                 dept.CreatedAt = DateTime.UtcNow;
-            }
-            if (dept.UpdatedAt == default)
-            {
-                dept.UpdatedAt = DateTime.UtcNow;
             }
 
             int result = _deptRepository.AddDepartment(dept);

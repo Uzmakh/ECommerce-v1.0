@@ -157,8 +157,8 @@ namespace QST.ECommerce.Tests
             Assert.True(dept.IsActive);
             Assert.Equal(string.Empty, dept.CreatedBy);
             Assert.Equal(string.Empty, dept.UpdatedBy);
-            Assert.Equal(default(DateTime), dept.CreatedAt);
-            Assert.Equal(default(DateTime), dept.UpdatedAt);
+            Assert.Null(dept.CreatedAt);
+            Assert.Null(dept.UpdatedAt);
         }
 
         [Fact]
@@ -177,8 +177,7 @@ namespace QST.ECommerce.Tests
             int result = service.SaveDepartment(dept);
 
             Assert.Equal(1, result);
-            Assert.NotEqual(default(DateTime), dept.CreatedAt);
-            Assert.NotEqual(default(DateTime), dept.UpdatedAt);
+            Assert.NotNull(dept.CreatedAt);
             Assert.Equal("Admin", dept.CreatedBy);
             Assert.True(dept.IsActive);
         }
