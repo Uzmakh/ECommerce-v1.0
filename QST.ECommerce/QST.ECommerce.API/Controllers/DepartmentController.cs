@@ -16,6 +16,7 @@ namespace QST.ECommerce.API.Controllers
             _deptService = deptService;
         }
 
+        // NOTE: Retrieves all departments including their audit (CreatedAt, CreatedBy, UpdatedAt, UpdatedBy) and active status.
         [HttpGet("GetAllDepartments")]
         public ActionResult<IEnumerable<Department>> GetAllDepartments()
         {
@@ -23,6 +24,7 @@ namespace QST.ECommerce.API.Controllers
             return Ok(departments);
         }
 
+        // NOTE: Retrieves a single department by its primary key ID; returns 404 if not found.
         [HttpGet("{id}")]
         public ActionResult<Department> GetDepartmentById(int id)
         {
@@ -34,6 +36,7 @@ namespace QST.ECommerce.API.Controllers
             return Ok(dept);
         }
 
+        // NOTE: Creates a new department and validates that business rules pass (returns 400 on failure).
         [HttpPost]
         public ActionResult AddDepartment(Department dept)
         {
@@ -45,6 +48,7 @@ namespace QST.ECommerce.API.Controllers
             return Ok("Department is successfully added!");
         }
 
+        // NOTE: Updates an existing department with audit timestamping (returns 400 on failure or if not found).
         [HttpPut]
         public ActionResult UpdateDepartment(Department dept)
         {

@@ -16,11 +16,13 @@ namespace QST.ECommerce.Application.Services
 
         public int SaveDepartment(Department dept)
         {
+            // NOTE: Business validation - name is required.
             if (dept == null || string.IsNullOrWhiteSpace(dept.Name))
             {
                 return -1;
             }
 
+            // NOTE: Ensure CreatedAt is populated before saving to persistence layer.
             if (dept.CreatedAt == null || dept.CreatedAt == default)
             {
                 dept.CreatedAt = DateTime.UtcNow;
@@ -32,11 +34,13 @@ namespace QST.ECommerce.Application.Services
 
         public int UpdateDepartment(Department dept)
         {
+            // NOTE: Business validation - name is required for updates.
             if (dept == null || string.IsNullOrWhiteSpace(dept.Name))
             {
                 return -1;
             }
 
+            // NOTE: Automatically stamp UpdatedAt with current UTC time during updates.
             dept.UpdatedAt = DateTime.UtcNow;
             return _deptRepository.UpdateDepartment(dept);
         }

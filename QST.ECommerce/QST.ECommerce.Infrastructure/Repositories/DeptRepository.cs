@@ -19,6 +19,8 @@ namespace QST.ECommerce.Infrastructure.Repositories
 
         public int AddDepartment(Department dept)
         {
+            // NOTE: Auto-generate CreatedAt timestamp if not explicitly supplied.
+            // UpdatedAt remains null until an update operation occurs.
             if (dept.CreatedAt == null || dept.CreatedAt == default)
             {
                 dept.CreatedAt = DateTime.UtcNow;
@@ -36,6 +38,7 @@ namespace QST.ECommerce.Infrastructure.Repositories
                 return 0;
             }
 
+            // NOTE: Null-check on fetched entity prevents NullReferenceException.
             var deptFromDb = GetDepartmentById(dept.Id);
             if (deptFromDb == null)
             {
@@ -44,6 +47,7 @@ namespace QST.ECommerce.Infrastructure.Repositories
 
             deptFromDb.Name = dept.Name;
             deptFromDb.Description = dept.Description;
+            // NOTE: Updates the timestamp automatically to UTC now if not already set.
             deptFromDb.UpdatedAt = dept.UpdatedAt ?? DateTime.UtcNow;
             deptFromDb.UpdatedBy = dept.UpdatedBy;
             deptFromDb.IsActive = dept.IsActive;
@@ -59,6 +63,7 @@ namespace QST.ECommerce.Infrastructure.Repositories
 
         public Department? GetDepartmentById(int deptId)
         {
+            // NOTE: Returns null if no match found (nullable return type prevents CS8603 warning).
             var dept = _dbContext.Departments.FirstOrDefault(d => d.Id == deptId);
             return dept;
         }
