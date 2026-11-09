@@ -4,6 +4,7 @@ using System.Linq;
 using QST.ECommerce.Application.Interfaces;
 using QST.ECommerce.Application.Services;
 using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Domain.Enums;
 
 namespace QST.ECommerce.Tests
 {

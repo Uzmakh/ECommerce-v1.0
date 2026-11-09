@@ -1,4 +1,5 @@
 using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Domain.Enums;
 using System.Collections.Generic;
 
 namespace QST.ECommerce.Application.Interfaces

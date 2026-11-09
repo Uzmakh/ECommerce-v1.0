@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QST.ECommerce.Application.Interfaces;
 using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Domain.Enums;
 using System.Collections.Generic;
 
 namespace QST.ECommerce.API.Controllers
