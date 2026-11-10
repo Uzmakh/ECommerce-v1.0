@@ -18,6 +18,30 @@ namespace QST.ECommerce.API.Controllers
             _deptService = deptService;
         }
 
+        // NOTE: Creates a new department and validates that business rules pass (returns 400 on failure).
+        [HttpPost("AddDepartment")]
+        public ActionResult AddDepartment(Department dept)
+        {
+            int result = _deptService.ManageDepartment(dept, DbCommands.Add);
+            if (result <= 0)
+            {
+                return BadRequest("Failed to add department. Department name is required.");
+            }
+            return Ok("Department is successfully added!");
+        }
+
+        // NOTE: Updates an existing department with audit timestamping (returns 400 on failure or if not found).
+        [HttpPut("ModifyDepartment")]
+        public ActionResult UpdateDepartment(Department dept)
+        {
+            int result = _deptService.ManageDepartment(dept, DbCommands.Update);
+            if (result <= 0)
+            {
+                return BadRequest("Failed to update department. Department not found or name is invalid.");
+            }
+            return Ok("Department is successfully updated!");
+        }
+
         // NOTE: Retrieves all departments including their audit (CreatedAt, CreatedBy, UpdatedAt, UpdatedBy) and active status.
         [HttpGet("GetAllDepartments")]
         public ActionResult<IEnumerable<Department>> GetAllDepartments()
@@ -38,28 +62,8 @@ namespace QST.ECommerce.API.Controllers
             return Ok(dept);
         }
 
-        // NOTE: Creates a new department and validates that business rules pass (returns 400 on failure).
-        [HttpPost]
-        public ActionResult AddDepartment(Department dept)
-        {
-            int result = _deptService.ManageDepartment(dept, DbCommands.Add);
-            if (result <= 0)
-            {
-                return BadRequest("Failed to add department. Department name is required.");
-            }
-            return Ok("Department is successfully added!");
-        }
+       
 
-        // NOTE: Updates an existing department with audit timestamping (returns 400 on failure or if not found).
-        [HttpPut]
-        public ActionResult UpdateDepartment(Department dept)
-        {
-            int result = _deptService.ManageDepartment(dept, DbCommands.Update);
-            if (result <= 0)
-            {
-                return BadRequest("Failed to update department. Department not found or name is invalid.");
-            }
-            return Ok("Department is successfully updated!");
-        }
+       
     }
 }

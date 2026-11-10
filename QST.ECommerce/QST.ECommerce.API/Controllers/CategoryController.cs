@@ -10,9 +10,9 @@ namespace QST.ECommerce.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryService _catSvc;
+        private readonly ICatalogService _catSvc;
 
-        public CategoryController(ICategoryService catSvc)
+        public CategoryController(ICatalogService catSvc)
         {
             _catSvc = catSvc;
         }
@@ -28,7 +28,7 @@ namespace QST.ECommerce.API.Controllers
             return Ok("Category is successfully added!");
         }
 
-        [HttpPost("ModifyCategory")]
+        [HttpPut("ModifyCategory")]
         public ActionResult UpdateCategory(Category request)
         {
             int result = _catSvc.ManageCategory(request, DbCommands.Update);
