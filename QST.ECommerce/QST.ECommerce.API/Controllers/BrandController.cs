@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QST.ECommerce.Application.Interfaces;
 using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Domain.Enums;
 using System.Collections.Generic;
 
 namespace QST.ECommerce.API.Controllers
@@ -10,9 +11,9 @@ namespace QST.ECommerce.API.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        private readonly IBrandService _brandService;
+        private readonly ICatalogService _brandService;
 
-        public BrandController(IBrandService brandService)
+        public BrandController(ICatalogService brandService)
         {
             _brandService = brandService;
         }
@@ -27,7 +28,7 @@ namespace QST.ECommerce.API.Controllers
         [HttpPost]
         public ActionResult AddBrand(Brand request)
         {
-            _brandService.SaveBrand(request);
+            _brandService.ManageBrand(request, DbCommands.Add);
             return Ok("Brand is successfully added");
         }
     }

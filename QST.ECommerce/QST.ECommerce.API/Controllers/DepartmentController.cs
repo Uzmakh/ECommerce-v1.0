@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using QST.ECommerce.Application.Interfaces;
+using QST.ECommerce.Application.Services;
 using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Domain.Enums;
 
 namespace QST.ECommerce.API.Controllers
 {
@@ -9,9 +11,9 @@ namespace QST.ECommerce.API.Controllers
     [ApiController]
     public class DepartmentController : ControllerBase
     {
-        private readonly IDeptService _deptService;
+        private readonly ICatalogService _deptService;
 
-        public DepartmentController(IDeptService deptService)
+        public DepartmentController(ICatalogService deptService)
         {
             _deptService = deptService;
         }
@@ -40,7 +42,7 @@ namespace QST.ECommerce.API.Controllers
         [HttpPost]
         public ActionResult AddDepartment(Department dept)
         {
-            int result = _deptService.SaveDepartment(dept);
+            int result = _deptService.ManageDepartment(dept, DbCommands.Add);
             if (result <= 0)
             {
                 return BadRequest("Failed to add department. Department name is required.");
@@ -52,7 +54,7 @@ namespace QST.ECommerce.API.Controllers
         [HttpPut]
         public ActionResult UpdateDepartment(Department dept)
         {
-            int result = _deptService.UpdateDepartment(dept);
+            int result = _deptService.ManageDepartment(dept, DbCommands.Update);
             if (result <= 0)
             {
                 return BadRequest("Failed to update department. Department not found or name is invalid.");

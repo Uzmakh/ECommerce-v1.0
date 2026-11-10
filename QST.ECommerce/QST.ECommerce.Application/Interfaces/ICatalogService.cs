@@ -1,4 +1,4 @@
-﻿using QST.ECommerce.Domain.Catalogue;
+using QST.ECommerce.Domain.Catalogue;
 using QST.ECommerce.Domain.Enums;
 using System;
 using System.Collections.Generic;
