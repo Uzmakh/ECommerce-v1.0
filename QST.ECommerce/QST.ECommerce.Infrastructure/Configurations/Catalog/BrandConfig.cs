@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QST.ECommerce.Domain.Catalogue;
 
 
-namespace QST.ECommerce.Infrastructure.Configurations
+namespace QST.ECommerce.Infrastructure.Configurations.Catalog
 {
     public class BrandConfig : IEntityTypeConfiguration<Brand>
     {

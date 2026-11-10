@@ -23,14 +23,20 @@ builder.Services.AddSwaggerGen();
 
 
 // Register Repository and Service for Dependency Injection
-builder.Services.AddScoped<IProductService, ProductService>();  // to initialize Product Service in Application Layer through Constructor Dependency Injection
-builder.Services.AddScoped<IProductRepository, ProductRepository>();  //Infrastructure Layer
-builder.Services.AddScoped<IDeptService, DeptService>();// to initialize Department Service in Application Layer through Constructor Dependency Injection
-builder.Services.AddScoped<IDeptRepository, DeptRepository>();  //Infrastructure Layer
-builder.Services.AddScoped<IBrandService, BrandService>();
-builder.Services.AddScoped<IBrandRepository, BrandRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+// Add services to the container (Catalogue)
+builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+
+
+
+//builder.Services.AddScoped<IProductService, ProductService>();  // to initialize Product Service in Application Layer through Constructor Dependency Injection
+//builder.Services.AddScoped<IProductRepository, ProductRepository>();  //Infrastructure Layer
+//builder.Services.AddScoped<IDeptService, DeptService>();// to initialize Department Service in Application Layer through Constructor Dependency Injection
+//builder.Services.AddScoped<IDeptRepository, DeptRepository>();  //Infrastructure Layer
+//builder.Services.AddScoped<IBrandService, BrandService>();
+//builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+//builder.Services.AddScoped<ICategoryService, CategoryService>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 
